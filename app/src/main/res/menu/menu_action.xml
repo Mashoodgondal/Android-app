@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:title="Profile"
+    android:id="@+id/profile"
+    android:titleTextColor="#0B0B0B"
+    />
+    <item
+        android:title="Contect"
+        android:id="@+id/contect"
+        android:titleTextColor="#0B0B0B"
+        />
+    <item
+        android:title="Setting"
+        android:id="@+id/setting"
+        android:titleTextColor="#0B0B0B"
+        />
+    <item
+        android:title="Google"
+        android:id="@+id/googlr"
+        android:titleTextColor="#0B0B0B"
+        />
+</menu>
