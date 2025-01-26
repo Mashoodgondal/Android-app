@@ -6,14 +6,25 @@
     android:background="#A0AD2323"
     tools:context=".ProfileFragment">
 
-
+    <!-- TextView for the Profile fragment -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/profile_fragment"
         android:gravity="center"
         android:textSize="25sp"
-        android:textColor="@color/black"
-        />
+
+        android:textColor="#135F85"
+
+        android:layout_marginTop="100dp"/>
+
+    <!-- Spinner to select from the items -->
+    <Spinner
+        android:id="@+id/spinnerProfile"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:background="@drawable/border"
+        android:layout_marginTop="40dp"/>
 
 </FrameLayout>
