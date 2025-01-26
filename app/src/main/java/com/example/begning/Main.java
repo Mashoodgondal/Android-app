@@ -60,6 +60,11 @@ loadFragment(new HomeFragment());
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
+    @Override
+public boolean onCreateOptionsMenu(Menu menu) {
+   getMenuInflater().inflate(R.menu.menu_action, menu);
+   return true;
+}
     private void loadFragment(Fragment fragment) {
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();

@@ -1,3 +1,5 @@
+
+
 package com.example.begning;
 
 import android.annotation.SuppressLint;
@@ -9,12 +11,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Signup extends AppCompatActivity {
+
     EditText username, email, password, confirmPassword;
     Button btnSignUp;
     TextView loginText;
@@ -50,12 +54,12 @@ public class Signup extends AppCompatActivity {
 
                 // Validate input fields
                 if (name.isEmpty() || userEmail.isEmpty() || userPassword.isEmpty() || userConfirmPassword.isEmpty()) {
-                    Toast.makeText(Signup.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                    showToast("Please fill all fields");
                     return;
                 }
 
                 if (!userPassword.equals(userConfirmPassword)) {
-                    Toast.makeText(Signup.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                    showToast("Passwords do not match");
                     return;
                 }
 
@@ -63,13 +67,13 @@ public class Signup extends AppCompatActivity {
                 HelperClass helperClass = new HelperClass(name, userEmail, userPassword);
                 reference.child(name).setValue(helperClass)
                         .addOnSuccessListener(aVoid -> {
-                            Toast.makeText(Signup.this, "Sign Up Successful", Toast.LENGTH_SHORT).show();
+                            showToast("Sign Up Successful");
                             // Redirect to Main screen
                             Intent intent = new Intent(Signup.this, Main.class);
                             startActivity(intent);
                             finish();
                         })
-                        .addOnFailureListener(e -> Toast.makeText(Signup.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                        .addOnFailureListener(e -> showToast("Error: " + e.getMessage()));
             }
         });
 
@@ -81,5 +85,10 @@ public class Signup extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    // Helper method for showing Toast messages
+    private void showToast(String message) {
+        runOnUiThread(() -> Toast.makeText(Signup.this, message, Toast.LENGTH_SHORT).show());
     }
 }

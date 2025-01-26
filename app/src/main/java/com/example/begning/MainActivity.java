@@ -1,20 +1,16 @@
+
 package com.example.begning;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,87 +20,85 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
-    EditText email,password;
-    Button btn;
-    @SuppressLint("MissingInflatedId")
+
+    EditText email, password;
+    Button btnLogin;
+    TextView signupText;
+    FirebaseDatabase database;
+    DatabaseReference reference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-        email=findViewById(R.id.Email);
-        password=findViewById(R.id.Password);
 
-        View signupText = findViewById(R.id.Signup_text);
+        // Initialize UI elements
+        email = findViewById(R.id.Email);
+        password = findViewById(R.id.Password);
+        btnLogin = findViewById(R.id.btnLogin);
+        signupText = findViewById(R.id.Signup_text);
+
+        // Initialize Firebase Database
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference("users"); // "users" node
+
+        // Navigate to Signup Screen
         signupText.setOnClickListener(v -> {
-            Intent intent =new Intent(MainActivity.this,Signup.class);
+            Intent intent = new Intent(MainActivity.this, Signup.class);
             startActivity(intent);
         });
-        btn = findViewById(R.id.btnLogin);
-        btn.setOnClickListener(v -> {
-            Intent intent =new Intent(MainActivity.this,Main.class);
-            startActivity(intent);
-        });
+
+        // Login Button Listener
+        btnLogin.setOnClickListener(v -> checkUser());
     }
-    public Boolean validateEmail(){
-        String val= email.getText().toString();
-        if (val.isEmpty()){
-            email.setError("Email cannot be Empty");
+
+    // Validate Email
+    public boolean validateEmail() {
+        String val = email.getText().toString().trim();
+        if (val.isEmpty()) {
+            email.setError("Email cannot be empty");
             return false;
-        }else {
+        } else {
             email.setError(null);
             return true;
         }
     }
-    public Boolean validatepassword(){
-        String val= password.getText().toString();
-        if (val.isEmpty()){
-            password.setError("Password cannot be Empty");
+
+    // Validate Password
+    public boolean validatePassword() {
+        String val = password.getText().toString().trim();
+        if (val.isEmpty()) {
+            password.setError("Password cannot be empty");
             return false;
-        }else {
+        } else {
             password.setError(null);
             return true;
         }
     }
+
+    // Check User Credentials in Firebase
     public void checkUser() {
-        String Email = email.getText().toString().trim();
-        String Password = password.getText().toString().trim();
+        if (!validateEmail() || !validatePassword()) return;
 
-        // Ensure inputs are not empty
-        if (Email.isEmpty()) {
-            email.setError("Email is required");
-            email.requestFocus();
-            return;
-        }
+        String userEmail = email.getText().toString().trim();
+        String userPassword = password.getText().toString().trim();
 
-        if (Password.isEmpty()) {
-            password.setError("Password is required");
-            password.requestFocus();
-            return;
-        }
-
-        // Reference to Firebase Realtime Database
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users"); // Assuming "users" is your database node
-        Query checkDatabase = reference.orderByChild("email").equalTo(Email);
+        Query checkDatabase = reference.orderByChild("email").equalTo(userEmail);
 
         checkDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    // Get user data
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                         String passwordFromDB = userSnapshot.child("password").getValue(String.class);
 
-                        if (passwordFromDB != null && passwordFromDB.equals(Password)) {
+                        if (passwordFromDB != null && passwordFromDB.equals(userPassword)) {
+                            showToast("Login Successful");
 
-                            Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-
-                            // Redirect or perform desired action
+                            // Redirect to Main Screen
+                            Intent intent = new Intent(MainActivity.this, Main.class);
+                            startActivity(intent);
+                            finish();
                         } else {
                             password.setError("Invalid password");
                             password.requestFocus();
@@ -118,9 +112,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(MainActivity.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                showToast("Database Error: " + error.getMessage());
             }
         });
     }
 
+    // Helper method for showing Toast messages
+    private void showToast(String message) {
+        runOnUiThread(() -> Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show());
+    }
 }
+
