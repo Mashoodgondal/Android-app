@@ -13,10 +13,16 @@
         android:text="@string/profile_fragment"
         android:gravity="center"
         android:textSize="25sp"
-
         android:textColor="#135F85"
-
         android:layout_marginTop="100dp"/>
+    <Button
+        android:id="@+id/btnShare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:text="Share Something"
+        android:padding="10dp"/>
 
     <!-- Spinner to select from the items -->
     <Spinner

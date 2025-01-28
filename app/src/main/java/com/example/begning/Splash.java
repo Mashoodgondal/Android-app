@@ -1,25 +1,23 @@
 //package com.example.begning;
 //
+//import android.content.Intent;
 //import android.os.Bundle;
-//
-//import androidx.activity.EdgeToEdge;
+//import android.os.Handler;
 //import androidx.appcompat.app.AppCompatActivity;
-//import androidx.core.graphics.Insets;
-//import androidx.core.view.ViewCompat;
-//import androidx.core.view.WindowInsetsCompat;
 //
 //public class Splash extends AppCompatActivity {
 //
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
-//        EdgeToEdge.enable(this);
 //        setContentView(R.layout.activity_splash);
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
+//
+//        // Handler to delay transition for 2 seconds (2000ms)
+//        new Handler().postDelayed(() -> {
+//            Intent intent = new Intent(Splash.this, MainActivity.class); // Change to your next activity
+//            startActivity(intent);
+//            finish(); // Close SplashActivity
+//        }, 2000);
 //    }
 //}
 package com.example.begning;
@@ -27,20 +25,45 @@ package com.example.begning;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Splash extends AppCompatActivity {
+
+    private TextView welcomeText;
+    private String textToType = "Welcome to Our App!";
+    private int index = 0;
+    private long delay = 150; // Typing speed
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        // Handler to delay transition for 3 seconds (3000ms)
+        welcomeText = findViewById(R.id.welcomeText);
+
+        // Start typing effect
+        autoType();
+
+        // Delay transition for 3 seconds (3000ms)
         new Handler().postDelayed(() -> {
             Intent intent = new Intent(Splash.this, MainActivity.class); // Change to your next activity
             startActivity(intent);
             finish(); // Close SplashActivity
         }, 3000);
+    }
+
+    private void autoType() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (index < textToType.length()) {
+                    welcomeText.setText(welcomeText.getText().toString() + textToType.charAt(index));
+                    index++;
+                    handler.postDelayed(this, delay);
+                }
+            }
+        }, delay);
     }
 }
