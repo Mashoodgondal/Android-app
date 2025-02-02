@@ -1,4 +1,48 @@
-<?xml version="1.0" encoding="utf-8"?>
+
+<!--&lt;!&ndash;<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"&ndash;&gt;-->
+<!--&lt;!&ndash;    xmlns:tools="http://schemas.android.com/tools"&ndash;&gt;-->
+<!--&lt;!&ndash;    android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;    android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;    android:background="#BCD0881F"&ndash;&gt;-->
+<!--&lt;!&ndash;    tools:context=".SettingFragment">&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/settingText"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:text="Loading Settings..."&ndash;&gt;-->
+<!--&lt;!&ndash;        android:textSize="25sp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:textColor="#0ECCBA"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:gravity="center" />&ndash;&gt;-->
+<!--&lt;!&ndash;</FrameLayout>&ndash;&gt;-->
+<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:background="#BCD0881F"-->
+<!--    tools:context=".SettingFragment">-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/settingText"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Loading Settings..."-->
+<!--        android:textSize="25sp"-->
+<!--        android:textColor="#0ECCBA"-->
+<!--        android:gravity="center"-->
+<!--        android:layout_gravity="center"/>-->
+
+<!--    &lt;!&ndash; Camera Icon &ndash;&gt;-->
+<!--    <ImageView-->
+<!--        android:id="@+id/cameraIcon"-->
+<!--        android:layout_width="80dp"-->
+<!--        android:layout_height="80dp"-->
+<!--        android:src="@drawable/camera_icon"-->
+<!--        android:layout_gravity="bottom|center"-->
+<!--        android:padding="10dp"-->
+<!--        android:visibility="gone" /> &lt;!&ndash; Initially hidden &ndash;&gt;-->
+
+<!--</FrameLayout>-->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,14 +50,22 @@
     android:background="#BCD0881F"
     tools:context=".SettingFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/settingText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/setting_fragment"
+        android:layout_height="wrap_content"
+        android:text="Loading Settings..."
         android:textSize="25sp"
         android:textColor="#0ECCBA"
         android:gravity="center"
-        />
+        android:layout_marginTop="50dp"/>
 
+    <!-- Camera Icon (Initially Hidden) -->
+    <ImageView
+        android:id="@+id/cameraIcon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal|center"
+        android:src="@android:drawable/ic_menu_camera"
+        android:visibility="gone" />
 </FrameLayout>

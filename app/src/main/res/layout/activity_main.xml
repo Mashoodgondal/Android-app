@@ -90,7 +90,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#4CAF50"
         android:text="or Signup"
-        android:textColor="#121212"
+        android:textColor="#DEDADA"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -8,7 +8,7 @@
     <item
         android:title="Contect"
         android:id="@+id/contect"
-        android:titleTextColor="#0ACE12"
+        android:titleTextColor="@color/black"
         />
     <item
         android:title="Setting"
