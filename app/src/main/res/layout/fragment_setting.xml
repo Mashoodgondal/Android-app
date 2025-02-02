@@ -1,20 +1,5 @@
 
-<!--&lt;!&ndash;<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"&ndash;&gt;-->
-<!--&lt;!&ndash;    xmlns:tools="http://schemas.android.com/tools"&ndash;&gt;-->
-<!--&lt;!&ndash;    android:layout_width="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;    android:layout_height="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;    android:background="#BCD0881F"&ndash;&gt;-->
-<!--&lt;!&ndash;    tools:context=".SettingFragment">&ndash;&gt;-->
 
-<!--&lt;!&ndash;    <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;        android:id="@+id/settingText"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:layout_height="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:text="Loading Settings..."&ndash;&gt;-->
-<!--&lt;!&ndash;        android:textSize="25sp"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:textColor="#0ECCBA"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:gravity="center" />&ndash;&gt;-->
-<!--&lt;!&ndash;</FrameLayout>&ndash;&gt;-->
 <!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
 <!--    xmlns:tools="http://schemas.android.com/tools"-->
 <!--    android:layout_width="match_parent"-->
@@ -30,18 +15,16 @@
 <!--        android:textSize="25sp"-->
 <!--        android:textColor="#0ECCBA"-->
 <!--        android:gravity="center"-->
-<!--        android:layout_gravity="center"/>-->
+<!--        android:layout_marginTop="50dp"/>-->
 
-<!--    &lt;!&ndash; Camera Icon &ndash;&gt;-->
+<!--    &lt;!&ndash; Camera Icon (Initially Hidden) &ndash;&gt;-->
 <!--    <ImageView-->
 <!--        android:id="@+id/cameraIcon"-->
-<!--        android:layout_width="80dp"-->
-<!--        android:layout_height="80dp"-->
-<!--        android:src="@drawable/camera_icon"-->
-<!--        android:layout_gravity="bottom|center"-->
-<!--        android:padding="10dp"-->
-<!--        android:visibility="gone" /> &lt;!&ndash; Initially hidden &ndash;&gt;-->
-
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_gravity="center_horizontal|center"-->
+<!--        android:src="@android:drawable/ic_menu_camera"-->
+<!--        android:visibility="gone" />-->
 <!--</FrameLayout>-->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -50,22 +33,53 @@
     android:background="#BCD0881F"
     tools:context=".SettingFragment">
 
-    <TextView
-        android:id="@+id/settingText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Loading Settings..."
-        android:textSize="25sp"
-        android:textColor="#0ECCBA"
-        android:gravity="center"
-        android:layout_marginTop="50dp"/>
-
-    <!-- Camera Icon (Initially Hidden) -->
+    <!-- Camera Icon (Top-Right Corner) -->
     <ImageView
         android:id="@+id/cameraIcon"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal|center"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_gravity="top|end"
+        android:layout_margin="16dp"
+        android:layout_marginTop="100dp"
         android:src="@android:drawable/ic_menu_camera"
-        android:visibility="gone" />
+        android:background="?attr/selectableItemBackground"
+        android:padding="8dp" />
+
+    <!-- Display Captured Image -->
+    <ImageView
+        android:id="@+id/capturedImage"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        android:background="@android:color/darker_gray"/>
+
+    <!-- Buttons for Delete & Share (Initially Hidden) -->
+    <LinearLayout
+        android:id="@+id/actionButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:backgroundTint="#FF5733"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/shareButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Share"
+            android:backgroundTint="#2196F3"
+            android:textColor="#FFFFFF"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>
 </FrameLayout>
