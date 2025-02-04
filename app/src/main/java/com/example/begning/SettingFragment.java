@@ -184,7 +184,7 @@ public class SettingFragment extends Fragment {
 
         cameraIcon = view.findViewById(R.id.cameraIcon);
         capturedImage = view.findViewById(R.id.capturedImage);
-        actionButtons = view.findViewById(R.id.actionButtons);
+        actionButtons = view.findViewById( R.id.actionButtons);
         deleteButton = view.findViewById(R.id.deleteButton);
         shareButton = view.findViewById(R.id.shareButton);
 
@@ -203,22 +203,45 @@ public class SettingFragment extends Fragment {
         }
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAMERA_REQUEST_CODE && data != null) {
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == requireActivity().RESULT_OK && data != null) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
+
             if (photo != null) {
+                capturedImage.setImageBitmap(photo); // Show image directly
+                capturedImage.setVisibility(View.VISIBLE);
+                actionButtons.setVisibility(View.VISIBLE); // Ensure buttons are visible
+
                 imageUri = saveImageToStorage(photo); // Save image and get URI
-                if (imageUri != null) {
-                    capturedImage.setImageURI(imageUri);
-                    capturedImage.setVisibility(View.VISIBLE);
-                    actionButtons.setVisibility(View.VISIBLE);
-                }
             }
         }
     }
 
+
+//    private Uri saveImageToStorage(Bitmap bitmap) {
+//        try {
+//            ContentValues values = new ContentValues();
+//            values.put(MediaStore.Images.Media.DISPLAY_NAME, "captured_" + System.currentTimeMillis() + ".jpg");
+//            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+//            values.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/MyApp");
+//
+//            Uri uri = requireActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+//            if (uri != null) {
+//                OutputStream outputStream = requireActivity().getContentResolver().openOutputStream(uri);
+//                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+//                outputStream.flush();
+//                outputStream.close();
+//                Toast.makeText(requireContext(), "Image saved successfully!", Toast.LENGTH_SHORT).show();
+//                return uri;
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
     private Uri saveImageToStorage(Bitmap bitmap) {
         try {
             ContentValues values = new ContentValues();
@@ -232,14 +255,14 @@ public class SettingFragment extends Fragment {
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
                 outputStream.flush();
                 outputStream.close();
-                Toast.makeText(requireContext(), "Image saved successfully!", Toast.LENGTH_SHORT).show();
-                return uri;
+                return uri; // Return valid URI
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+
 
     private void deleteImage() {
         if (imageUri != null) {
