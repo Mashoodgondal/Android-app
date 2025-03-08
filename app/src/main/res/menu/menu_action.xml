@@ -3,21 +3,21 @@
 <item
     android:title="Profile"
     android:id="@+id/profile"
-    android:titleTextColor="#08D311"
+    android:titleTextColor="#FF000000"
     />
     <item
         android:title="Contect"
         android:id="@+id/contect"
-        android:titleTextColor="@color/black"
+        android:titleTextColor="#FF000000"
         />
     <item
         android:title="Setting"
         android:id="@+id/setting"
-        android:titleTextColor="#14BC19"
+        android:titleTextColor="#FF000000"
         />
     <item
         android:title="Google"
         android:id="@+id/googlr"
-        android:titleTextColor="#1DA922"
+        android:titleTextColor="#FF000000"
         />
 </menu>

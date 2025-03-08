@@ -1,25 +1,4 @@
-//package com.example.begning;
-//
-//import android.content.Intent;
-//import android.os.Bundle;
-//import android.os.Handler;
-//import androidx.appcompat.app.AppCompatActivity;
-//
-//public class Splash extends AppCompatActivity {
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_splash);
-//
-//        // Handler to delay transition for 2 seconds (2000ms)
-//        new Handler().postDelayed(() -> {
-//            Intent intent = new Intent(Splash.this, MainActivity.class); // Change to your next activity
-//            startActivity(intent);
-//            finish(); // Close SplashActivity
-//        }, 2000);
-//    }
-//}
+
 package com.example.begning;
 
 import android.content.Intent;
