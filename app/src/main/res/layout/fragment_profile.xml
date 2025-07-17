@@ -1,36 +1,48 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#A0AD2323"
-    tools:context=".ProfileFragment">
+    android:padding="16dp"
+    android:background="#FFFFFF">
 
-    <!-- TextView for the Profile fragment -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/profile_fragment"
-        android:gravity="center"
-        android:textSize="25sp"
-        android:textColor="#135F85"
-        android:layout_marginTop="100dp"/>
-    <Button
-        android:id="@+id/btnShare"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-        android:text="Share Something"
-        android:padding="10dp"/>
+        android:orientation="vertical">
 
-    <!-- Spinner to select from the items -->
-    <Spinner
-        android:id="@+id/spinnerProfile"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-        android:background="@drawable/border"
-        android:layout_marginTop="40dp"/>
+        <!-- Input Field -->
+        <EditText
+            android:id="@+id/etIngredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter ingredients (e.g. potato, tomato)"
+            android:padding="12dp"
+            android:background="@drawable/border"
+            android:layout_marginBottom="12dp" />
 
-</FrameLayout>
+        <!-- Choose Image Button -->
+        <Button
+            android:id="@+id/btnChooseImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Image"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Submit Button -->
+        <Button
+            android:id="@+id/btnGetRecipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get Recipe" />
+
+        <!-- Recipe Output -->
+        <TextView
+            android:id="@+id/tvRecipeResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recipe will appear here..."
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp" />
+
+    </LinearLayout>
+</ScrollView>

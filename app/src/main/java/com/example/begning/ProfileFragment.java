@@ -1,197 +1,119 @@
-//package com.example.begning;
-//
-//import android.os.Bundle;
-//import android.view.LayoutInflater;
-//import android.view.View;
-//import android.view.ViewGroup;
-//import android.widget.ArrayAdapter;
-//import android.widget.Button;
-//import android.widget.Spinner;
-//
-//import androidx.fragment.app.Fragment;
-//
-//public class ProfileFragment extends Fragment {
-//
-//    private Spinner spinnerProfile;
-//
-//
-//
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        View view = inflater.inflate(R.layout.fragment_profile, container, false);
-//
-//        // Find Spinner by ID
-//        spinnerProfile = view.findViewById(R.id.spinnerProfile);
-//
-//        // Create an array of items to display in the spinner
-//        String[] spinnerItems = {"Item 1", "Item 2", "Item 3", "Item 4"};
-//
-//        // Create an ArrayAdapter using the string array and a default spinner layout
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-//                android.R.layout.simple_spinner_item, spinnerItems);
-//
-//        // Specify the layout to use when the list of choices appears
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
-//        // Apply the adapter to the spinner
-//        spinnerProfile.setAdapter(adapter);
-//
-//        return view;
-//
-//    }
-//}
-//package com.example.begning;
-//
-//import android.content.Intent;
-//import android.os.Bundle;
-//import android.os.Handler;
-//import android.view.LayoutInflater;
-//import android.view.View;
-//import android.view.ViewGroup;
-//import android.widget.ArrayAdapter;
-//import android.widget.Button;
-//import android.widget.Spinner;
-//
-//import androidx.fragment.app.Fragment;
-//
-//public class ProfileFragment extends Fragment {
-//
-//    private Spinner spinnerProfile;
-//    private Button btnShare;
-//    private static final int DELAY_TIME = 1000; // 1 seconds delay
-//
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        View view = inflater.inflate(R.layout.fragment_profile, container, false);
-//
-//        // Find Spinner and Button by ID
-//        spinnerProfile = view.findViewById(R.id.spinnerProfile);
-//        btnShare = view.findViewById(R.id.btnShare);
-//
-//        // Create an array of items to display in the spinner
-//        String[] spinnerItems = {"Item 1", "Item 2", "Item 3", "Item 4"};
-//
-//        // Create an ArrayAdapter using the string array and a default spinner layout
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-//                android.R.layout.simple_spinner_item, spinnerItems);
-//
-//        // Specify the layout to use when the list of choices appears
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
-//        // Apply the adapter to the spinner
-//        spinnerProfile.setAdapter(adapter);
-//
-//        // Set click listener for the Share button
-//        btnShare.setOnClickListener(v -> {
-//            // Delay execution using Handler
-//            new Handler().postDelayed(this::shareContent, DELAY_TIME);
-//        });
-//
-//        return view;
-//    }
-//
-//    private void shareContent() {
-//        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-//        shareIntent.setType("text/plain"); // Specify content type
-//        shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out this amazing content!");
-//
-//        // Show the share dialog
-//        startActivity(Intent.createChooser(shareIntent, "Share via"));
-//    }
-//}
 package com.example.begning;
 
+import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
+import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 public class ProfileFragment extends Fragment {
 
-    private Spinner spinnerProfile;
-    private Button btnShare;
-    private static final int DELAY_TIME = 1000; // 1-second delay
-    private static final String CHANNEL_ID = "share_notification";
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private static final String CHANNEL_ID = "image_channel";
 
+    private EditText editTextInfo;
+    private Button btnChooseImage;
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        // Find Spinner and Button by ID
-        spinnerProfile = view.findViewById(R.id.spinnerProfile);
-        btnShare = view.findViewById(R.id.btnShare);
+        // UI references
+        editTextInfo = view.findViewById(R.id.editTextInfo);
+        btnChooseImage = view.findViewById(R.id.btnChooseImage);
 
         // Create notification channel
         createNotificationChannel();
 
-        // Create an array of items to display in the spinner
-        String[] spinnerItems = {"Item 1", "Item 2", "Item 3", "Item 4"};
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_item, spinnerItems);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerProfile.setAdapter(adapter);
-
-        // Set click listener for the Share button
-        btnShare.setOnClickListener(v -> {
-            // Delay execution using Handler
-            new Handler().postDelayed(() -> {
-                shareContent();
-                showNotification(); // Show notification after sharing
-            }, DELAY_TIME);
-        });
+        // Handle image pick button click
+        btnChooseImage.setOnClickListener(v -> openImagePicker());
 
         return view;
     }
 
-    private void shareContent() {
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out this amazing content!");
-
-        startActivity(Intent.createChooser(shareIntent, "Share via"));
+    private void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
-    private void showNotification() {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            Uri imageUri = data.getData();
+
+            // You can display or upload the image here
+            String fileName = getFileNameFromUri(imageUri);
+            Toast.makeText(requireContext(), "Selected: " + fileName, Toast.LENGTH_SHORT).show();
+
+            // Show a notification
+            showNotification(fileName);
+        }
+    }
+
+    private void showNotification(String fileName) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(requireContext(), CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_notification) // Replace with your own icon
-                .setContentTitle("Shared Successfully")
-                .setContentText("You have shared something!")
+//                .setSmallIcon(R.drawable.ic_notification)  // Replace with your icon
+                .setContentTitle("Image Selected")
+                .setContentText("You selected: " + fileName)
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(requireContext());
-        notificationManager.notify(1, builder.build());
+        if (ActivityCompat.checkSelfPermission(requireContext(), android.Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(),
+                    new String[]{android.Manifest.permission.POST_NOTIFICATIONS},
+                    101); // request code
+        }
+
+        notificationManager.notify(2, builder.build());
     }
 
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Share Notification";
-            String description = "Notification when user shares something";
+            CharSequence name = "Image Notification";
+            String description = "Notifies when an image is selected";
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
 
-            NotificationManager notificationManager = requireContext().getSystemService(NotificationManager.class);
-            if (notificationManager != null) {
-                notificationManager.createNotificationChannel(channel);
+            NotificationManager manager = requireContext().getSystemService(NotificationManager.class);
+            if (manager != null) {
+                manager.createNotificationChannel(channel);
             }
         }
+    }
+
+    private String getFileNameFromUri(Uri uri) {
+        String fileName = "Unknown";
+        if (uri.getScheme().equals("content")) {
+            try (android.database.Cursor cursor = requireContext().getContentResolver().query(uri, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    fileName = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
+                }
+            }
+        } else {
+            fileName = uri.getLastPathSegment();
+        }
+        return fileName;
     }
 }
