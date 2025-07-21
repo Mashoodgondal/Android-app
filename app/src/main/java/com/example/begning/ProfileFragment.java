@@ -142,7 +142,7 @@ public class ProfileFragment extends Fragment {
                 public void onResponse(Call<RecipeResponse> call, Response<RecipeResponse> response) {
                     if (response.isSuccessful() && response.body() != null && response.body().success) {
                         showRecipe(response.body().recipe);
-                        showNotification(response.body().recipe.name);
+//                        showNotification(response.body().recipe.name);
                     } else {
                         tvRecipeResult.setText("Failed to get recipe.");
                     }
@@ -208,16 +208,17 @@ public class ProfileFragment extends Fragment {
         tvRecipeResult.setText(sb.toString());
     }
 
-    private void showNotification(String title) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(requireContext(), CHANNEL_ID)
-//                .setSmallIcon(R.drawable.ic_notification) // Use your own icon
-                .setContentTitle("Recipe Ready!")
-                .setContentText("Recipe for: " + title)
-                .setPriority(NotificationCompat.PRIORITY_HIGH);
+//    private void showNotification(String title) {
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(requireContext(), CHANNEL_ID)
+////                .setSmallIcon(R.drawable.ic_notification) // Use your own icon
+//                .setContentTitle("Recipe Ready!")
+//                .setContentText("Recipe for: " + title)
+//                .setPriority(NotificationCompat.PRIORITY_HIGH);
+//
+//        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(requireContext());
+//        notificationManager.notify(100, builder.build());
+//    }
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(requireContext());
-        notificationManager.notify(100, builder.build());
-    }
 
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
