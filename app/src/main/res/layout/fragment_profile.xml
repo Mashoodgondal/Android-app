@@ -1,48 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="#FFFFFF">
+    android:layout_marginTop="60dp"
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Input Field -->
-        <EditText
-            android:id="@+id/etIngredients"
+        <!-- Title -->
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter ingredients (e.g. potato, tomato)"
-            android:padding="12dp"
-            android:background="@drawable/border"
-            android:layout_marginBottom="12dp" />
+            android:text="Recipe Generator"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="32dp" />
 
         <!-- Choose Image Button -->
         <Button
             android:id="@+id/btnChooseImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
             android:text="Choose Image"
-            android:layout_marginBottom="12dp"/>
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
 
-        <!-- Submit Button -->
+        <!-- Get Recipe Button -->
         <Button
             android:id="@+id/btnGetRecipe"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Get Recipe" />
+            android:layout_height="56dp"
+            android:text="Get Recipe"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp" />
 
-        <!-- Recipe Output -->
+        <!-- Recipe Result -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recipe Result:"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
+
         <TextView
             android:id="@+id/tvRecipeResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Recipe will appear here..."
-            android:padding="12dp"
-            android:textSize="16sp"
-            android:layout_marginTop="20dp" />
+            android:text="No recipe generated yet. Choose an image and get started!"
+            android:textSize="14sp"
+            android:lineSpacingExtra="4dp"
+            android:minHeight="200dp"
+            android:padding="16dp"
+            android:background="#f0f0f0" />
 
     </LinearLayout>
+
 </ScrollView>
